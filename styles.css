@@ -1,0 +1,131 @@
+:root {
+  /* Thème clair (par défaut) */
+  --primary: #2a6496;
+  --secondary: #e0e0e0;
+  --dark: #333333;
+  --light: #f9f9f9;
+  --accent: #ff6b6b;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --bg-color: #f9f9f9;
+  --card-bg: white;
+  --text-color: #333333;
+}
+
+/* Thème sombre */
+.dark-theme {
+  --primary: #4f95d6;
+  --secondary: #555555;
+  --dark: #f0f0f0;
+  --light: #222222;
+  --accent: #ff8585;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  --bg-color: #222222;
+  --card-bg: #333333;
+  --text-color: #f0f0f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  border-bottom: 3px solid var(--primary);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 30px;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+/* Projet section */
+#projet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+#projet > div {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+#projet > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Bouton de changement de thème */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  #projet {
+    grid-template-columns: 1fr;
+  }
+}
