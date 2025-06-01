@@ -1,0 +1,54 @@
+{
+    "name": "/",
+    "type": "folder",
+    "files": [
+        {
+            "name": "informations.txt",
+            "type": "file",
+            "content": "info sur moi"
+        }
+    ],
+    "folders": [
+        {
+            "name": "Projets",
+            "type": "folder",
+            "files": [],
+            "folders": [
+                {
+                    "name": "Projet1",
+                    "type": "folder",
+                    "files": [
+                        {
+                            "name": "lien.txt",
+                            "type": "file",
+                            "content": "lien du git"
+                        },
+                        {
+                            "name": "readme.md",
+                            "type": "file",
+                            "content": "description du projet"
+                        }
+                    ],
+                    "folders": []
+                },
+                {
+                    "name": "Projet2",
+                    "type": "folder",
+                    "files": [
+                        {
+                            "name": "lien.txt",
+                            "type": "file",
+                            "content": "lien du git"
+                        },
+                        {
+                            "name": "readme.md",
+                            "type": "file",
+                            "content": "description du projet"
+                        }
+                    ],
+                    "folders": []
+                }
+            ]
+        }
+    ]
+}

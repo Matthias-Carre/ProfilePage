@@ -1,7 +1,20 @@
 import { Arbo, File, Folder } from './Folder.js';
-const CommandList = ['help', "ls"];
-const arbo = new Arbo(["root",["projets",["projet1",[],"projet2",[]]],["passions",["passion1",[],"passion2",[]]]]);
 
+const CommandList = ['help', "ls","cd"];
+let arboData = null;
+// position dans l'arborescence
+let pos = null;
+//on load le json
+async function loadArbo() {
+    try {
+        const rep = await fetch('tree.json');
+        const data = await rep.json();
+        return data;
+    } catch (error) {
+        console.error("Error loading tree.json:", error);
+        return null;
+    }
+}
 function help() {
     consoleRep("Available commands:");
     CommandList.forEach(command => {
@@ -10,17 +23,30 @@ function help() {
 }
 function ls() {
     consoleRep("Available files:");
-    arbo.tree.getFolders().forEach(folder => {
-        consoleRep(`- ${folder.getName()}`);
-        folder.getFiles().forEach(file => {
-            consoleRep(`  - ${file.getName()}`);
+    if (pos) {
+        pos.folders.forEach(Folder => {
+            consoleRep(`- ${Folder.name}`);
         });
     }
-    );
 }
 function quoi() {
     consoleRep("Feur!");
 }
+function cd(folderName) {
+    if (pos && pos.folders) {
+        console.log("Current position:", pos);
+        pos.folders.find(f => console.log(f.name));
+        pos.folders.find(f => console.log(f.name == "Projets"));
+        const folder = pos.folders.find(f => f.name == folderName);
+        if (folder) {
+            pos = folder;
+            consoleRep(`Changed directory to ${folderName}`);
+        } else {
+            consoleRep(`-emci: ${folderName}: No such directory`);
+        }
+    }
+}
+
 function consoleRep(message) {
     const screen = document.getElementById('terminal-screen');
     screen.innerHTML += `<div class="console-output">${message}</div>`;
@@ -30,7 +56,8 @@ function analyseInput(command) {
     let vals = command.split(' ');
     //console.log(vals[0] in CommandDico);
     if (vals[0] in CommandDico) {
-        CommandDico[vals[0]]();
+        let argsV = vals.slice(1);
+        CommandDico[vals[0]](argsV);
         return;
     }
     consoleRep("-emci: "+vals[0]+": command not found");
@@ -43,10 +70,12 @@ function initScreen() {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded',async () => {
     const screen = document.getElementById('terminal-screen');
     const terminal = document.getElementById('terminal-input');
-
+    arboData = await loadArbo();
+    pos = arboData;
+    console.log("arbo loaded", arboData);
     terminal.addEventListener('keydown', (event) => {
         //console.log(event.key);
         if (event.key === 'Enter') {
@@ -56,10 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     initScreen();
-        
 });
 const CommandDico = {
     'help': help,
     'ls': ls,
-    'quoi': quoi
+    'quoi': quoi,
+    'cd': cd,
 };
