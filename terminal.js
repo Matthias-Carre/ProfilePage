@@ -1,6 +1,7 @@
 import { Arbo, File, Folder } from './Folder.js';
 
 const CommandList = ['help', "ls","cd"];
+let currentRep = ["MatthiasC:"];
 let arboData = null;
 // position dans l'arborescence
 let pos = null;
@@ -32,6 +33,14 @@ function ls() {
 function quoi() {
     consoleRep("Feur!");
 }
+
+function updatecurrentRep() {
+    const pos = document.getElementById('pos');
+    let res = currentRep.join('/');
+    res += '$';
+    pos.innerHTML = res;
+}
+
 function cd(folderName) {
     if (pos && pos.folders) {
         console.log("Current position:", pos);
@@ -41,6 +50,8 @@ function cd(folderName) {
         if (folder) {
             pos = folder;
             consoleRep(`Changed directory to ${folderName}`);
+            currentRep.push(folderName);
+            updatecurrentRep();
         } else {
             consoleRep(`-emci: ${folderName}: No such directory`);
         }

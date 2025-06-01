@@ -10,12 +10,12 @@
     ],
     "folders": [
         {
-            "name": "Projets",
+            "name": "projets",
             "type": "folder",
             "files": [],
             "folders": [
                 {
-                    "name": "Projet1",
+                    "name": "projet1",
                     "type": "folder",
                     "files": [
                         {
@@ -32,7 +32,7 @@
                     "folders": []
                 },
                 {
-                    "name": "Projet2",
+                    "name": "projet2",
                     "type": "folder",
                     "files": [
                         {
