@@ -41,6 +41,7 @@ function updatecurrentRep() {
     pos.innerHTML = res;
 }
 
+//faire un apelle sur le foldername pour les cd de + de 1 folder et gerer les ../
 function cd(folderName) {
     if (pos && pos.folders) {
         console.log("Current position:", pos);
