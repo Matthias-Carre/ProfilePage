@@ -17,21 +17,21 @@ async function loadArbo() {
     }
 }
 function help() {
-    consoleRep("Available commands:");
+    printScreen("Available commands:");
     CommandList.forEach(command => {
-        consoleRep(`- ${command}`);
+        printScreen(`- ${command}`);
     });
 }
 function ls() {
-    consoleRep("Available files:");
+    printScreen("Available files:");
     if (pos) {
         pos.folders.forEach(Folder => {
-            consoleRep(`- ${Folder.name}`);
+            printScreen(`- ${Folder.name}`);
         });
     }
 }
 function quoi() {
-    consoleRep("Feur!");
+    printScreen("Feur!");
 }
 
 function updatecurrentRep() {
@@ -40,26 +40,42 @@ function updatecurrentRep() {
     res += '$';
     pos.innerHTML = res;
 }
-
-//faire un apelle sur le foldername pour les cd de + de 1 folder et gerer les ../
-function cd(folderName) {
+function cdRec(folderName){
     if (pos && pos.folders) {
         console.log("Current position:", pos);
-        pos.folders.find(f => console.log(f.name));
-        pos.folders.find(f => console.log(f.name == "Projets"));
         const folder = pos.folders.find(f => f.name == folderName);
         if (folder) {
             pos = folder;
-            consoleRep(`Changed directory to ${folderName}`);
             currentRep.push(folderName);
-            updatecurrentRep();
+            
+            return true;
         } else {
-            consoleRep(`-emci: ${folderName}: No such directory`);
+            return false;
         }
     }
 }
+//faire un apelle sur le foldername pour les cd de + de 1 folder et gerer les ../
+function cd(folderName) {
+    if(folderName[0][0] == '/') {
+        console.log("racine");
+    }else{
+        console.log("folderName: ", folderName);
+        let folders = folderName[0].split('/');
+        console.log("folders: ", folders);
+        folders.every(folder => {
+            if (!cdRec(folder)){
+                printScreen(`-emci: ${folder}: No such directory`);
+                return false; 
+            }
+            printScreen(`Changed directory to ${folderName}`);
+            updatecurrentRep();
+        });
+    }
 
-function consoleRep(message) {
+
+}
+
+function printScreen(message) {
     const screen = document.getElementById('terminal-screen');
     screen.innerHTML += `<div class="console-output">${message}</div>`;
     screen.scrollTop = screen.scrollHeight; // Scroll to the bottom
@@ -72,13 +88,13 @@ function analyseInput(command) {
         CommandDico[vals[0]](argsV);
         return;
     }
-    consoleRep("-emci: "+vals[0]+": command not found");
+    printScreen("-emci: "+vals[0]+": command not found");
 }
 function initScreen() {
     const screen = document.getElementById('terminal-screen');
     screen.innerHTML = ''; // Clear the screen
-    consoleRep("Welcome to the terminal!");
-    consoleRep("Type 'help' for a list of commands.");
+    printScreen("Welcome to the terminal!");
+    printScreen("Type 'help' for a list of commands.");
 }
 
 
